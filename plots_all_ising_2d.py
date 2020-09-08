@@ -1,4 +1,6 @@
 import pyalps
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pyalps.plot
 #%matplotlib inline

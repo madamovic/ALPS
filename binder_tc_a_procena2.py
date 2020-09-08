@@ -3,7 +3,8 @@
 
 # In[ ]:
 
-import pyalps
+import pyalpsimport matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pyalps.plot
 import numpy as np
