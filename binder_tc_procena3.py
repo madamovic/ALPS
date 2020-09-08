@@ -14,7 +14,7 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [10,20,30]:
-    for t in np.linspace[0.0,3.0,30]:
+    for t in np.linspace(0.0,3.0,30):
         parms.append(
             { 
               'LATTICE'        : "square lattice", 
