@@ -29,15 +29,15 @@ for l in [10,20,30,40,50,60,70,80]:
     )
 
 #write the input file and run the simulation
-input_file = pyalps.writeInputFiles('parm7b',parms)
+input_file = pyalps.writeInputFiles('parm7l',parms)
 pyalps.runApplication('spinmc',input_file,Tmin=5)
 # use the following instead if you have MPI
 #pyalps.runApplication('spinmc',input_file,Tmin=5,MPI=4)
 
-pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7b'))
+pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7l'))
 
 #load the susceptibility and collect it as function of temperature T
-data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7b'), 'Specific Heat')
+data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7l'), 'Specific Heat')
 spec_heat = pyalps.collectXY(data,x='T',y='Specific Heat',foreach=['L'])
 
 
@@ -69,5 +69,4 @@ plt.xlabel('$L$')
 plt.ylabel('Specificna toplota $c_v(T_c)$')
 plt.title('2D Izingov model, $\alpha=$ %.4s' % alpha_nu)
 plt.savefig("figure13.eps",dpi=300)
-
 

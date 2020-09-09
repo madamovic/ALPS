@@ -58,7 +58,7 @@ pyalps.plot.plot(binder_u4)
 plt.xlabel('$t=(T-T_c)/T_c, T_c=3.269$')
 plt.ylabel('Binderov kumulant U4 $g$')
 plt.title('2D Izingov model')
-plt.legened(loc='best')
+plt.legend(loc='best')
 plt.savefig('figure7.eps',dpi=300)
 
 
