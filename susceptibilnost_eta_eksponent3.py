@@ -48,7 +48,7 @@ for d in connected_susc:
 two_minus_eta=2.0 #your estimate
 for d in connected_susc:
     l = d.props['L']
-    d.y = d.y/pow(float(l),two_eta)
+    d.y = d.y/pow(float(l),two_minus_eta)
 
 plt.figure()
 pyalps.plot.plot(connected_susc)
