@@ -67,6 +67,7 @@ plt.plot(peak_sh.x, f(None, peak_sh.x, pars))
 pyalps.plot.plot(peak_sh)
 plt.xlabel('$L$')
 plt.ylabel('Specificna toplota $c_v(T_c)$')
-plt.title('2D Izingov model, $\alpha=$ %.4s' % alpha_nu)
+plt.title(r'2D Izingov model, $\alpha=$ %.4s' % alpha_nu)
 plt.savefig("figure13.eps",dpi=300)
+
 
