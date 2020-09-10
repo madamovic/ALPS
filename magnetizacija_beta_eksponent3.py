@@ -59,7 +59,7 @@ for d in magnetization_abs:
 #     
 plt.figure()
 pyalps.plot.plot(magnetization_abs)
-plt.xlabel('$L^a T-Tc/Tc'')
+plt.xlabel('$L^a T-Tc/Tc')
 plt.ylabel(r'Magnetizacija $|m|L^\beta/\nu, \beta/\nu=$ %.4s' % beta_over_nu)
 plt.title('2D Izingov model')
 plt.savefig("figure19.eps",dpi=300)
