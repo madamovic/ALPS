@@ -13,15 +13,15 @@ import pyalps.fit_wrapper as fw
 
 #prepare the input parameters
 parms = []
-for l in [8,12,24]:
+for l in [2,4,6,8,10,12]:
     for t in np.linspace(0.0,6.0,60):
         parms.append(
             { 
               'LATTICE'        : "simple cubic lattice", 
               'T'              : t,
               'J'              : 1 ,
-              'THERMALIZATION' : 10000,
-              'SWEEPS'         : 100000,
+              'THERMALIZATION' : 20000,
+              'SWEEPS'         : 1000000,
               'UPDATE'         : "cluster",
               'MODEL'          : "Ising",
               'L'              : l

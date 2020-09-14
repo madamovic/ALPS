@@ -27,7 +27,7 @@ y=file_data[:,1]
 
 
 
-llista = [8,12,24,48]
+llista = [2,4,6,8,10,12]
 n=60
 
 
@@ -68,8 +68,8 @@ for p in range(0,len(llista)):
 
 
 plt.figure()
-plt.plot(x24,y24,label='$U_{4}$',color='b')
-plt.plot(xizv24,yizv24,label='$dU_{4}/dT$',color='r')
+plt.plot(x12,y12,label='$U_{4}$',color='b')
+plt.plot(xizv12,yizv12,label='$dU_{4}/dT$',color='r')
 plt.legend(loc='best')
 plt.savefig("figure45.eps",dpi=300)
 
