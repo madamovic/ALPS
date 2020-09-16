@@ -16,7 +16,7 @@ def derivative(f,a,method='central',h=0.1):
         raise ValueError("Method must be 'central', 'forward' or 'backward'.")
 
 
-file=open('binderdata_rounded_t_redosled_3d_Ising_BCC.txt')
+file=open('binderdata_rounded_t_redosled_3d_Ising_FCC.txt')
 
 file_data=np.loadtxt(file,usecols=(0,1))
 
@@ -28,7 +28,7 @@ y=file_data[:,1]
 
 
 llista = [4,6,8,12,16]
-n=90
+n=120
 
 
 
@@ -57,7 +57,7 @@ for m in range(0,len(llista)):
 
 
 lista=[]
-tc=6.355
+tc=9.79
 
 for p in range(0,len(llista)):
     exec("rez = derivative(funk%d,tc)" % (llista[p]));
@@ -71,7 +71,7 @@ plt.figure()
 plt.plot(x16,y16,label='$U_{4}$',color='b')
 plt.plot(xizv16,yizv16,label='$dU_{4}/dT$',color='r')
 plt.legend(loc='best')
-plt.savefig("figure68.eps",dpi=300)
+plt.savefig("figure91.eps",dpi=300)
 
 
 from scipy import optimize
@@ -89,7 +89,7 @@ plt.xlabel('$L$')
 plt.ylabel(r'$dU_{4}/dT|T_{C}\approx L^{1/\nu}$')
 plt.title(r'$1/\nu=$ %.13s,$\nu=$ %.13s' % (params[1],1/params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure69.eps",dpi=300)
+plt.savefig("figure92.eps",dpi=300)
 
 
 

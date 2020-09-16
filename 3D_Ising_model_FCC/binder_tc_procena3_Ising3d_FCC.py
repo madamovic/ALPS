@@ -14,11 +14,11 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [4,6,8,12,16]:
-    for t in np.linspace(0.0,9.0,90):
+    for t in np.linspace(0.0,12.0,120):
         parms.append(
             { 
-              'LATTICE'        : "bcc",
-              'LATTICE_LIBRARY' : "bcc.xml", 
+              'LATTICE'        : "fcc",
+              'LATTICE_LIBRARY' : "fcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 10000,
@@ -30,33 +30,36 @@ for l in [4,6,8,12,16]:
     )
 
 #write the input file and run the simulation
-input_file = pyalps.writeInputFiles('parm7e',parms)
+input_file = pyalps.writeInputFiles('parm7d',parms)
 pyalps.runApplication('spinmc',input_file,Tmin=5)
 
 
-pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7e'))
+pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7d'))
 
 #load the susceptibility and collect it as function of temperature T
-data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7e'),'Binder Cumulant')
+data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7d'),'Binder Cumulant')
 
 binder_u4 = pyalps.collectXY(data,x='T',y='Binder Cumulant',foreach=['L'])
+# 
+# #make a plot of the Binder cumulant:
 
-Tc=6.355 
-
-for a in np.linspace(1.5,2.8,13):
-  s=binder_u4
-  for d in s:
-      d.x -= Tc
-      d.x = d.x/Tc
-      l = d.props['L']
-      d.x = d.x * pow(float(l),a)
-      plt.figure()
-      pyalps.plot.plot(s)
-      plt.xlabel('$L^a(T-T_c)/T_c, a=%.2f$' % a)
-      plt.ylabel('Binderov kumulant U4 $g$')
-      plt.title('3D Izingov model, BCC')
-      plt.legend(loc='best')
-      plt.savefig("figura_a_nu_BCC%d.eps"%(a*10-14),dpi=300)
+# 
+#perform a data collapse of the Binder cumulant: 
+Tc=8.79 #your estimate
+#a=1  #your estimate
+# 
+for d in binder_u4:
+    d.x -= Tc
+    d.x = d.x/Tc
+#    l = d.props['L']
+#    d.x = d.x * pow(float(l),a)
 #     
+plt.figure()
+pyalps.plot.plot(binder_u4)
+plt.xlabel('$t=(T-T_c)/T_c, T_c=8.79$')
+plt.ylabel('Binderov kumulant U4 $g$')
+plt.title('3D Izingov model, FCC')
+plt.legend(loc='best')
+plt.savefig('figure77.eps',dpi=300)
 
 

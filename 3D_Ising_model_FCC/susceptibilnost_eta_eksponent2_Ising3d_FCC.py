@@ -9,7 +9,7 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [4,6,8,12,16]:
-    for t in [6.28,6.29,6.30,6.31,6.32,6.33,6.34,6.35,6.36,6.37,6.38,6.39,6.40,6.41]:
+    for t in [9.70,9.71,9.72,9.73,9.74,9.75,9.76,9.77,9.78,9.79,9.80,9.81,9.82,9.83,9.84,9.85,9.86,9.87,9.88]:
         parms.append(
             { 
               'LATTICE'        : "bcc",
@@ -36,7 +36,7 @@ data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7n'),'Connected
 
 connected_susc = pyalps.collectXY(data,x='T',y='Connected Susceptibility',foreach=['L'])
 
-Tc=6.355
+Tc=9.79
 a=2.2
 
 #make a data collapse of the connected susceptibility as a function of (T-Tc)/Tc:
@@ -55,5 +55,5 @@ plt.figure()
 pyalps.plot.plot(connected_susc)
 plt.xlabel('$L^a(T-T_c)/T_c, Tc=4.511, a=1.6$')
 plt.ylabel(r'$L^{\gamma/\nu}\chi_c,\gamma/\nu=$ %.4s' % two_minus_eta)
-plt.title('3D Ising model, BCC')
-plt.savefig("figure61.eps",dpi=300)
+plt.title('3D Ising model, FCC')
+plt.savefig("figure84.eps",dpi=300)

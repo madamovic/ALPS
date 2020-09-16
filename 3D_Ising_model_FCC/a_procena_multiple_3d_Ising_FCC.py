@@ -14,11 +14,11 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [4,6,8,12,16]:
-    for t in np.linspace(0.0,9.0,90):
+    for t in np.linspace(0.0,12.0,120):
         parms.append(
             { 
-              'LATTICE'        : "bcc",
-              'LATTICE_LIBRARY' : "bcc.xml", 
+              'LATTICE'        : "fcc",
+              'LATTICE_LIBRARY' : "fcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 10000,
@@ -41,7 +41,7 @@ data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7e'),'Binder Cu
 
 binder_u4 = pyalps.collectXY(data,x='T',y='Binder Cumulant',foreach=['L'])
 
-Tc=6.355 
+Tc=9.79 
 
 for a in np.linspace(1.5,2.8,13):
   s=binder_u4
@@ -56,7 +56,7 @@ for a in np.linspace(1.5,2.8,13):
       plt.ylabel('Binderov kumulant U4 $g$')
       plt.title('3D Izingov model, BCC')
       plt.legend(loc='best')
-      plt.savefig("figura_a_nu_BCC%d.eps"%(a*10-14),dpi=300)
+      plt.savefig("figura_a_nu_FCC%d.eps"%(a*10-14),dpi=300)
 #     
 
 

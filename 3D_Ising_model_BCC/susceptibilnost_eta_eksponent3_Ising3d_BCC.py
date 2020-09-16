@@ -8,8 +8,8 @@ import pyalps.fit_wrapper as fw
 
 #prepare the input parameters
 parms = []
-for l in [8,12,24,48]:
-    for t in [4.45,4.46,4.47,4.48,4.49,4.50,4.51,4.52,4.53,4.54,4.55,4.56,4.57,4.58]:
+for l in [4,6,8,12,16]:
+    for t in [6.28,6.29,6.30,6.31,6.32,6.33,6.34,6.35,6.36,6.37,6.38,6.39,6.40,6.41]:
         parms.append(
             { 
               'LATTICE'        : "bcc",
@@ -55,5 +55,6 @@ plt.figure()
 pyalps.plot.plot(connected_susc)
 plt.xlabel('$L^a(T-T_c)/T_c, Tc=4.511, a=1.6$')
 plt.ylabel(r'$L^{\gamma/\nu}\chi_c,\gamma/\nu=$ %.4s' % two_minus_eta)
-plt.title('3D Ising model')
+plt.title('3D Ising model, BCC')
 plt.savefig("figure62.eps",dpi=300)
+

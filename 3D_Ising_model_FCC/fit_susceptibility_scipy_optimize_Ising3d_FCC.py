@@ -9,11 +9,11 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [4,6,8,12,16]:
-    for t in [6.28,6.29,6.30,6.31,6.32,6.33,6.34,6.35,6.36,6.37,6.38,6.39,6.40,6.41]:
+    for t in [9.70,9.71,9.72,9.73,9.74,9.75,9.76,9.77,9.78,9.79,9.80,9.81,9.82,9.83,9.84,9.85,9.86,9.87,9.88]:
         parms.append(
             { 
-              'LATTICE'        : "bcc",
-              'LATTICE_LIBRARY' : "bcc.xml", 
+              'LATTICE'        : "fcc",
+              'LATTICE_LIBRARY' : "fcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 10000,
@@ -63,7 +63,7 @@ listafit=[]
 for i in range(0,len(peak_cs.y)):
     listafit.append(np.array([peak_cs.x[i],peak_cs.y[i]]))
 
-np.savetxt('susceptibilnost_podaci_fitovanje_3d_Ising_BCC.txt',listafit,delimiter=' ')
+np.savetxt('susceptibilnost_podaci_fitovanje_3d_Ising_FCC.txt',listafit,delimiter=' ')
 
 pars = [fw.Parameter(1), fw.Parameter(1)]
 
@@ -92,7 +92,7 @@ plt.xlabel('$L$')
 plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
 plt.title('$\gamma_{ALPS}=$ %.13s, $\gamma_{SCIPY}=$ %.13s' % (gamma_nu,params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure66.eps",dpi=300)
+plt.savefig("figure89.eps",dpi=300)
 
 
 

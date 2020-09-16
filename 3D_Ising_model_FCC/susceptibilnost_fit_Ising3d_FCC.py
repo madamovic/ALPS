@@ -9,11 +9,11 @@ import pyalps.fit_wrapper as fw
 #prepare the input parameters
 parms = []
 for l in [4,6,8,12,16]:
-    for t in [6.28,6.29,6.30,6.31,6.32,6.33,6.34,6.35,6.36,6.37,6.38,6.39,6.40,6.41]:
+    for t in [9.70,9.71,9.72,9.73,9.74,9.75,9.76,9.77,9.78,9.79,9.80,9.81,9.82,9.83,9.84,9.85,9.86,9.87,9.88]:
         parms.append(
             { 
-              'LATTICE'        : "bcc",
-              'LATTICE_LIBRARY' : "bcc.xml", 
+              'LATTICE'        : "fcc",
+              'LATTICE_LIBRARY' : "fcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 10000,
@@ -74,25 +74,14 @@ prefactor = pars[0].get()
 gamma_nu = pars[1].get()
 
 
-
-from scipy import optimize
-
-def test_funk(x,a,b):
-    return a*x**b
-
-params,params_covariance=optimize.curve_fit(test_funk,peak_cs.x,peak_cs.y)
-
-
 # 
 plt.figure()
-plt.scatter(peak_cs.x,peak_cs.y,label='Podaci',color='b')
-plt.plot(peak_cs.x,f(None, peak_cs.x, pars),label='ALPS',color='g')
-plt.plot(peak_cs.x,test_funk(peak_cs.x,params[0],params[1]),label='Scipy',color='r')
+plt.plot(peak_cs.x, f(None, peak_cs.x, pars))
+pyalps.plot.plot(peak_cs)
 plt.xlabel('$L$')
 plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
-plt.title('$\gamma_{ALPS}=$ %.13s, $\gamma_{SCIPY}=$ %.13s' % (gamma_nu,params[1]))
-plt.legend(loc='upper left')
-plt.savefig("figure66.eps",dpi=300)
+plt.title('3D Izingov model, BCC, $\gamma=$ %.4s' % gamma_nu)
+plt.savefig("figure81.eps",dpi=300)
 
 
 
