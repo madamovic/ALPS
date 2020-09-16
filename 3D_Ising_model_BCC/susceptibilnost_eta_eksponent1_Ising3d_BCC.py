@@ -25,14 +25,14 @@ for l in [4,6,8,12,16]:
     )
 
 #write the input file and run the simulation
-input_file = pyalps.writeInputFiles('parm7a',parms)
+input_file = pyalps.writeInputFiles('parm7m',parms)
 pyalps.runApplication('spinmc',input_file,Tmin=5)
 # use the following instead if you have MPI
 #pyalps.runApplication('spinmc',input_file,Tmin=5,MPI=4)
 
-pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7a'))
+pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7m'))
 
-data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7a'),'Connected Susceptibility')
+data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7m'),'Connected Susceptibility')
 
 connected_susc = pyalps.collectXY(data,x='T',y='Connected Susceptibility',foreach=['L'])
 
