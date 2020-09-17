@@ -9,22 +9,25 @@ import matplotlib.pyplot as plt
 import pyalps.plot
 #%matplotlib inline
 import numpy as np
+from scipy import optimize
+from scipy import interpolate
+import pyalps.fit_wrapper as fw
 
 
 
-numeratorfigs=24
+numeratorfigs=1
 
 #prepare the input parameters
 parms = []
 for l in [2,4,6,8,10,12]: 
-    for t in np.linspace(0.01,6.0,60):
+    for t in np.linspace(0.0,6.0,60):
         parms.append(
             { 
               'LATTICE'        : "simple cubic lattice", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 20000,
-              'SWEEPS'         : 1000000,
+              'SWEEPS'         : 100000,
               'UPDATE'         : "cluster",
               'MODEL'          : "Ising",
               'L'              : l
@@ -55,7 +58,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Magnetizacija $|m|$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -65,7 +68,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Susceptibilnost $\chi$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -75,7 +78,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Specificna toplota $c_v$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 
 numeratorfigs+=1
@@ -86,7 +89,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U4 $g$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -96,7 +99,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U2 $g$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -104,7 +107,7 @@ numeratorfigs+=1
 ###################################################################
 
 
-f = open('binderdata_3d_Ising.txt','w')
+f = open('binderdata_3d_Ising_SC.txt','w')
 f.write(pyalps.plot.convertToText(binder_u4))
 f.close()
 
@@ -118,22 +121,23 @@ for d in r:
     d.x = np.around(d.x,1)
 
 
-f = open('binderdata_rounded_t_3d_Ising.txt','w')
-f.write(pyalps.plot.convertToText(r))
-f.close()
+fg = open('binderdata_rounded_t_3d_Ising_SC.txt','w')
+fg.write(pyalps.plot.convertToText(r))
+fg.close()
 
 # OK OK OK OK OK OK 
 ####################################################################
 # REDOSLED
+
 red=binder_u4
 
 for d in red:
     d.x=np.around(d.x,1)
 
 
-f=open('binderdata_rounded_t_3d_Ising.txt','w')
-f.write(pyalps.plot.convertToText(red))
-f.close()
+fh=open('binderdata_rounded_t_3d_Ising_SC.txt','w')
+fh.write(pyalps.plot.convertToText(red))
+fh.close()
 
 
 lvrednost=np.array([q.props['L'] for q in red])
@@ -143,32 +147,25 @@ print(lvrednost)
 sel=np.argsort(lvrednost)
 print(sel)
 
-
 red=np.array(red)
-
-
 
 red=red[sel]
 
 
-
-
-
-
-s=open('binderdata_rounded_t_redosled_3d_Ising.txt','w')
+s=open('binderdata_rounded_t_redosled_3d_Ising_SC.txt','w')
 s.write(pyalps.plot.convertToText(red))
 s.close()
 
 
 
-
+# OK OK OK OK OK OK OK OK 
 ###################################################################################################################################################################
 # Tc procena
 
 
 
 
-for Tc in [4.511,3.511,5.511]:
+for Tc in np.linspace(4.0,5.0,100):
   listfortc=binder_u4
   for d in listfortc:
       d.x -= Tc
@@ -179,16 +176,17 @@ for Tc in [4.511,3.511,5.511]:
       plt.ylabel('Binderov kumulant U4 $g$')
       plt.title('3D Izingov model')
       plt.legend(loc='best')
-      plt.savefig('figure%d.eps'%(numeratorfigs),dpi=300)
+      plt.savefig('figure_SC%d.eps'%(numeratorfigs),dpi=300)
   numeratorfigs+=1
 
 
+# OK OK OK OK OK OK OK 
 #################################################################################3
 # a_nu procena
 
-Tc=4.511 
+Tc=4.51
 
-for a in np.linspace(1.5,2.8,13):
+for a in np.linspace(1.0,4.0,40):
   s=binder_u4
   for d in s:
       d.x -= Tc
@@ -201,137 +199,17 @@ for a in np.linspace(1.5,2.8,13):
       plt.ylabel('Binderov kumulant U4 $g$')
       plt.title('3D Izingov model, BCC')
       plt.legend(loc='best')
-      plt.savefig("figura_a_nu_BCC%d.eps"%(a*10-14),dpi=300)
+      plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+  numeratorfigs+=1
 
-
+# OK OK OK OK OK OK OK OK OK 
 #############################################################################33
 
-#
-#make a fit of the connected susceptibility as a function of L:
-cs_mean=[]
-for q in connected_susc:
-    cs_mean.append(np.array([d.mean for d in q.y]))
 
-
-peak_cs = pyalps.DataSet()
-peak_cs.props = pyalps.dict_intersect([q.props for q in connected_susc])
-peak_cs.y = np.array([np.max(q) for q in cs_mean])
-peak_cs.x = np.array([q.props['L'] for q in connected_susc])
-# 
-
-
-
-sel = np.argsort(peak_cs.x)
-
-
-peak_cs.y = peak_cs.y[sel]
-peak_cs.x = peak_cs.x[sel]
-
-listafit=[]
-
-for i in range(0,len(peak_cs.y)):
-    listafit.append(np.array([peak_cs.x[i],peak_cs.y[i]]))
-
-np.savetxt('susceptibilnost_podaci_fitovanje_3d_Ising.txt',listafit,delimiter=' ')
-
-pars = [fw.Parameter(1), fw.Parameter(1)]
-
-
-f = lambda self, x, pars: pars[0]()*np.power(x,pars[1]())
-fw.fit(None, f, pars, peak_cs.y, peak_cs.x)
-prefactor = pars[0].get()
-gamma_nu = pars[1].get()
-
-
-# 
-plt.figure()
-plt.plot(peak_cs.x, f(None, peak_cs.x, pars))
-pyalps.plot.plot(peak_cs)
-plt.xlabel('$L$')
-plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
-plt.title('2D Izingov model, $\gamma=$ %.4s' % gamma_nu)
-plt.savefig("figure35.eps",dpi=300)
-
-
-
-#############################################
-## SCIPY FIT
-from scipy import optimize
 
 def test_funk(x,a,b):
     return a*x**b
 
-params,params_covariance=optimize.curve_fit(test_funk,peak_cs.x,peak_cs.y)
-
-
-# 
-plt.figure()
-plt.scatter(peak_cs.x,peak_cs.y,label='Podaci',color='b')
-plt.plot(peak_cs.x,f(None, peak_cs.x, pars),label='ALPS',color='g')
-plt.plot(peak_cs.x,test_funk(peak_cs.x,params[0],params[1]),label='Scipy',color='r')
-plt.xlabel('$L$')
-plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
-plt.title('$\gamma_{ALPS}=$ %.13s, $\gamma_{SCIPY}=$ %.13s' % (gamma_nu,params[1]))
-plt.legend(loc='upper left')
-plt.savefig("figure43.eps",dpi=300)
-
-
-#################################################################################3
-#
-#make a fit of the specific heat as a function of L:
-sh_mean=[]
-for q in spec_heat:
-    sh_mean.append(np.array([d.mean for d in q.y]))
-#     
-peak_sh = pyalps.DataSet()
-peak_sh.props = pyalps.dict_intersect([q.props for q in spec_heat])
-peak_sh.y = np.array([np.max(q) for q in sh_mean])
-peak_sh.x = np.array([q.props['L'] for q in spec_heat])
- 
-sel = np.argsort(peak_sh.x)
-peak_sh.y = peak_sh.y[sel]
-peak_sh.x = peak_sh.x[sel]
-# 
-pars = [fw.Parameter(1), fw.Parameter(1)]
-f = lambda self, x, pars: pars[0]()*np.power(x,pars[1]())
-fw.fit(None, f, pars, peak_sh.y, peak_sh.x)
-prefactor = pars[0].get()
-alpha_nu = pars[1].get()
-# 
-plt.figure()
-plt.plot(peak_sh.x, f(None, peak_sh.x, pars))
-pyalps.plot.plot(peak_sh)
-plt.xlabel('$L$')
-plt.ylabel('Specificna toplota $c_v(T_c)$')
-plt.title(r'3D Izingov model, $\alpha=$ %.4s' % alpha_nu)
-plt.savefig("figure36.eps",dpi=300)
-
-
-
-
-
-#####
-# SCIPY FIT
-
-def test_funk(x,a,b):
-    return a*x**b
-
-params,params_covariance=optimize.curve_fit(test_funk,peak_sh.x,peak_sh.y)
-# 
-plt.figure()
-plt.scatter(peak_sh.x,peak_sh.y,label='Podaci',color='b')
-plt.plot(peak_sh.x,f(None, peak_sh.x, pars),label='ALPS',color='g')
-plt.plot(peak_sh.x,test_funk(peak_sh.x,params[0],params[1]),label='Scipy',color='r')
-plt.xlabel('$L$')
-plt.ylabel('Specificna toplota $c_v(T_c)$')
-plt.title(r'$\alpha_{ALPS}=$ %.13s, $\alpha_{SCIPY}=$ %.13s' % (alpha_nu,params[1]))
-plt.legend(loc='upper left')
-plt.savefig("figure44.eps",dpi=300)
-
-
-##
-
-#################################################################################################
 #
 # NUMERICAL DERIVATIVE
 #
@@ -349,7 +227,7 @@ def derivative(f,a,method='central',h=0.1):
         raise ValueError("Method must be 'central', 'forward' or 'backward'.")
 
 
-file=open('binderdata_rounded_t_redosled_3d_Ising.txt')
+file=open('binderdata_rounded_t_redosled_3d_Ising_SC.txt')
 
 file_data=np.loadtxt(file,usecols=(0,1))
 
@@ -404,13 +282,10 @@ plt.figure()
 plt.plot(x12,y12,label='$U_{4}$',color='b')
 plt.plot(xizv12,yizv12,label='$dU_{4}/dT$',color='r')
 plt.legend(loc='best')
-plt.savefig("figure45.eps",dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
+numeratorfigs+=1
 
-from scipy import optimize
-
-def test_funk(x,a,b):
-    return a*x**b
 
 params,params_covariance=optimize.curve_fit(test_funk,llista,lista)
 
@@ -422,10 +297,12 @@ plt.xlabel('$L$')
 plt.ylabel(r'$dU_{4}/dT|T_{C}\approx L^{1/\nu}$')
 plt.title(r'$1/\nu=$ %.13s,$\nu=$ %.13s' % (params[1],1/params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure46.eps",dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
 
 
+numeratorfigs+=1
 
+# OK OK OK OK OK OK OK OK OK
 ##############################################################################################
 #
 #
@@ -433,30 +310,35 @@ plt.savefig("figure46.eps",dpi=300)
 #
 #
 #
-Tc=4.511
+Tc=4.51
 a=1.6
 
 #make a data collapse of the connected susceptibility as a function of (T-Tc)/Tc:
-for d in connected_susc:
+suscol=connected_susc
+
+for d in suscol:
     d.x -= Tc
     d.x = d.x/Tc
     l = d.props['L']
     d.x = d.x * pow(float(l),a)
 
-two_minus_eta=1.96 #your estimate
-for d in connected_susc:
-    l = d.props['L']
-    d.y = d.y/pow(float(l),two_minus_eta)
+g=suscol
 
-plt.figure()
-pyalps.plot.plot(connected_susc)
-plt.xlabel('$L^a(T-T_c)/T_c, Tc=4.511, a=1.6$')
-plt.ylabel(r'$L^{\gamma/\nu}\chi_c,\gamma/\nu=$ %.4s' % two_minus_eta)
-plt.title('3D Ising model')
-plt.savefig("figure37.eps",dpi=300)
+for two_minus_eta in np.linspace(1.0,3.0,30):
+  suscol=g
+  for d in suscol:
+      l = d.props['L']
+      d.y = d.y/pow(float(l),two_minus_eta)
+      plt.figure()
+      pyalps.plot.plot(suscol)
+      plt.xlabel('$L^a(T-T_c)/T_c, Tc=%.3f, a=%.2f$'%(Tc,a))
+      plt.ylabel(r'$L^{\gamma/\nu}\chi_c,\gamma/\nu=$ %.4s' % two_minus_eta)
+      plt.title('3D Ising model')
+      plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+  numeratorfigs+=1
 
 
-
+# OK OK OK OK OK OK 
 #############################################################################################
 #
 #
@@ -464,27 +346,33 @@ plt.savefig("figure37.eps",dpi=300)
 #
 #
 #
-Tc=4.511
+Tc=4.51
 a=1.6
 
 #make a data collapse of the |magnetization| as a function of (T-Tc)/Tc
-for d in magnetization_abs:
+magcol=magnetization_abs
+
+for d in magcol:
     d.x -= Tc
     d.x = d.x/Tc
     l = d.props['L']
     d.x = d.x * pow(float(l),a)
 
+h=magcol
 
-beta_over_nu=0.522 #your estimate    
+for beta_over_nu in np.linspace(0.5,0.6,100):
+  magcol=h  
+  for d in magcol:
+      l = d.props['L']
+      d.y = d.y / pow(float(l),-beta_over_nu)
+      plt.figure()
+      pyalps.plot.plot(magnetization_abs)
+      plt.xlabel('$L^a(T-T_c)/T_c, Tc=%.3f, a=%.2f$'%(Tc,a))
+      plt.ylabel(r'Magnetizacija $|m|L^\beta/\nu, \beta/\nu=$ %.4s' % beta_over_nu)
+      plt.title('3D Izingov model')
+      plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+  numeratorfigs+=1
 
-for d in magnetization_abs:
-    l = d.props['L']
-    d.y = d.y / pow(float(l),-beta_over_nu)
-#
 
-plt.figure()
-pyalps.plot.plot(magnetization_abs)
-plt.xlabel('$L^a T-Tc/Tc')
-plt.ylabel(r'Magnetizacija $|m|L^\beta/\nu, \beta/\nu=$ %.4s' % beta_over_nu)
-plt.title('3D Izingov model')
-plt.savefig("figure40.eps",dpi=300)
+# OK OK OK OK OK OK
+#########################
