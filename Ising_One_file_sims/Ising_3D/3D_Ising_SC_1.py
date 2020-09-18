@@ -13,6 +13,9 @@ from scipy import optimize
 from scipy import interpolate
 import pyalps.fit_wrapper as fw
 plt.rcParams.update({'figure.max_open_warning': 0})
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
+from mpl_toolkits.axes_grid1.inset_locator import mark_inset
+
 
 
 
@@ -20,14 +23,14 @@ numeratorfigs=1
 
 #prepare the input parameters
 parms = []
-for l in [2,4,6,8,10,12]: 
+for l in [12,24,48]: 
     for t in np.linspace(0.01,6.0,60):
         parms.append(
             { 
               'LATTICE'        : "simple cubic lattice", 
               'T'              : t,
               'J'              : 1 ,
-              'THERMALIZATION' : 20000,
+              'THERMALIZATION' : 50000,
               'SWEEPS'         : 100000,
               'UPDATE'         : "cluster",
               'MODEL'          : "Ising",
@@ -59,7 +62,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Magnetizacija $|m|$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=400)
 
 numeratorfigs+=1
 
@@ -69,7 +72,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Susceptibilnost $\chi$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=400)
 
 numeratorfigs+=1
 
@@ -79,7 +82,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Specificna toplota $c_v$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=400)
 
 
 numeratorfigs+=1
@@ -90,7 +93,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U4 $g$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=400)
 
 numeratorfigs+=1
 
@@ -100,7 +103,7 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U2 $g$')
 plt.title('3D Izingov model')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=400)
 
 numeratorfigs+=1
 
@@ -108,7 +111,7 @@ numeratorfigs+=1
 ###################################################################
 
 
-f = open('binderdata_3d_Ising_SC.txt','w')
+f = open('binderdata_3D_Ising_SC.txt','w')
 f.write(pyalps.plot.convertToText(binder_u4))
 f.close()
 
@@ -122,7 +125,7 @@ for d in r:
     d.x = np.around(d.x,1)
 
 
-fg = open('binderdata_rounded_t_3d_Ising_SC.txt','w')
+fg = open('binderdata_rounded_t_3D_Ising_SC.txt','w')
 fg.write(pyalps.plot.convertToText(r))
 fg.close()
 
@@ -136,7 +139,7 @@ for d in red:
     d.x=np.around(d.x,1)
 
 
-fh=open('binderdata_rounded_t_3d_Ising_SC.txt','w')
+fh=open('binderdata_rounded_t_3D_Ising_SC.txt','w')
 fh.write(pyalps.plot.convertToText(red))
 fh.close()
 
@@ -153,7 +156,7 @@ red=np.array(red)
 red=red[sel]
 
 
-s=open('binderdata_rounded_t_redosled_3d_Ising_SC.txt','w')
+s=open('binderdata_rounded_t_redosled_3D_Ising_SC.txt','w')
 s.write(pyalps.plot.convertToText(red))
 s.close()
 
@@ -166,16 +169,27 @@ s.close()
 
 
 
-for Tc in np.linspace(4.0,5.0,100):
+for Tc in np.linspace(4.0,5.0,5):
   binder_u4 = pyalps.collectXY(data,x='T',y='Binder Cumulant',foreach=['L'])
   for d in binder_u4:
       d.x -= Tc
-      d.x = d.x/Tc  
-  plt.figure()
+      d.x = d.x/Tc
+  fig, ax = plt.subplots()  
   pyalps.plot.plot(binder_u4)
   plt.xlabel('$t=(T-T_c)/T_c, T_c=%.3f$'%(Tc)) 
   plt.ylabel('Binderov kumulant U4 $g$')
   plt.title('3D Izingov model')
-  plt.legend(loc='best')
+  plt.legend(loc='upper left')
+  axins = zoomed_inset_axes(ax, 2.5, loc='upper center') # zoom = 6
+  pyalps.plot.plot(binder_u4)
+  axins.set_xlim(-0.1, 0.1) # Limit the region for zoom
+  axins.set_ylim(0.8, 1.8)
+  plt.xticks(visible=True)  # Not present ticks
+  plt.yticks(visible=True)
+  plt.xlabel("")
+  plt.ylabel("")
+  plt.grid()
+  mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
   plt.savefig('figure_SC%d.eps'%(numeratorfigs),dpi=300)
   numeratorfigs+=1
+  
