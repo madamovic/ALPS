@@ -30,8 +30,8 @@ for l in [12,24,48]:
               'LATTICE'        : "simple cubic lattice", 
               'T'              : t,
               'J'              : 1 ,
-              'THERMALIZATION' : 50000,
-              'SWEEPS'         : 100000,
+              'THERMALIZATION' : 10000,
+              'SWEEPS'         : 50000,
               'UPDATE'         : "cluster",
               'MODEL'          : "Ising",
               'L'              : l

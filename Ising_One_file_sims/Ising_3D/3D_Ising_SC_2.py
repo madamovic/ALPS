@@ -35,15 +35,15 @@ for l in [8,12,14,16,24]:
             }
     )
 #write the input file and run the simulation
-input_file = pyalps.writeInputFiles('parm7a',parms)
+input_file = pyalps.writeInputFiles('parm7b',parms)
 pyalps.runApplication('spinmc',input_file,Tmin=5)
 # use the following instead if you have MPI
 #pyalps.runApplication('spinmc',input_file,Tmin=5,MPI=2)
 
-pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7a'))
+pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7b'))
 
 #load the susceptibility and collect it as function of temperature T
-data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7a'),['|Magnetization|', 'Connected Susceptibility', 'Specific Heat', 'Binder Cumulant', 'Binder Cumulant U2'])
+data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7b'),['|Magnetization|', 'Connected Susceptibility', 'Specific Heat', 'Binder Cumulant', 'Binder Cumulant U2'])
 magnetization_abs = pyalps.collectXY(data,x='T',y='|Magnetization|',foreach=['L'])
 connected_susc = pyalps.collectXY(data,x='T',y='Connected Susceptibility',foreach=['L'])
 spec_heat = pyalps.collectXY(data,x='T',y='Specific Heat',foreach=['L'])

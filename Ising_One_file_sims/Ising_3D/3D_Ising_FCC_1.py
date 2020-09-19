@@ -30,23 +30,23 @@ for l in [12,24,48]:
               'LATTICE_LIBRARY'        : "fcc.xml", 
               'T'              : t,
               'J'              : 1 ,
-              'THERMALIZATION' : 50000,
-              'SWEEPS'         : 100000,
+              'THERMALIZATION' : 10000,
+              'SWEEPS'         : 50000,
               'UPDATE'         : "cluster",
               'MODEL'          : "Ising",
               'L'              : l
             }
     )
 #write the input file and run the simulation
-input_file = pyalps.writeInputFiles('parm7b',parms)
+input_file = pyalps.writeInputFiles('parm7e',parms)
 pyalps.runApplication('spinmc',input_file,Tmin=5)
 # use the following instead if you have MPI
 #pyalps.runApplication('spinmc',input_file,Tmin=5,MPI=2)
 
-pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7b'))
+pyalps.evaluateSpinMC(pyalps.getResultFiles(prefix='parm7e'))
 
 #load the susceptibility and collect it as function of temperature T
-data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7b'),['|Magnetization|', 'Connected Susceptibility', 'Specific Heat', 'Binder Cumulant', 'Binder Cumulant U2'])
+data = pyalps.loadMeasurements(pyalps.getResultFiles(prefix='parm7e'),['|Magnetization|', 'Connected Susceptibility', 'Specific Heat', 'Binder Cumulant', 'Binder Cumulant U2'])
 magnetization_abs = pyalps.collectXY(data,x='T',y='|Magnetization|',foreach=['L'])
 connected_susc = pyalps.collectXY(data,x='T',y='Connected Susceptibility',foreach=['L'])
 spec_heat = pyalps.collectXY(data,x='T',y='Specific Heat',foreach=['L'])
