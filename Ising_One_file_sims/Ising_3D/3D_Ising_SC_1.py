@@ -169,7 +169,7 @@ s.close()
 
 
 
-for Tc in np.linspace(4.0,5.0,5):
+for Tc in np.linspace(4.0,5.0,50):
   binder_u4 = pyalps.collectXY(data,x='T',y='Binder Cumulant',foreach=['L'])
   for d in binder_u4:
       d.x -= Tc
