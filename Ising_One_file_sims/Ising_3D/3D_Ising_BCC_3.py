@@ -11,11 +11,12 @@ import pyalps.fit_wrapper as fw
 
 
 parms = []
-for l in [2,4,6,8,10,12]: 
-    for t in [4.45,4.46,4.47,4.48,4.49,4.50,4.51,4.52,4.53,4.54,4.55,4.56,4.57,4.58]:
+for l in [12,24,48,64]: 
+    for t in np.linspace(5.8,7.0,24):
         parms.append(
             { 
-              'LATTICE'        : "simple cubic lattice", 
+              'LATTICE'        : "bcc",
+              'LATTICE_LIBRARY'        : "bcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 20000,
@@ -70,7 +71,7 @@ listafit=[]
 for i in range(0,len(peak_cs.y)):
     listafit.append(np.array([peak_cs.x[i],peak_cs.y[i]]))
 
-np.savetxt('susceptibilnost_podaci_fitovanje_3d_Ising_SC.txt',listafit,delimiter=' ')
+np.savetxt('susceptibilnost_podaci_fitovanje_3d_Ising_BCC.txt',listafit,delimiter=' ')
 
 pars = [fw.Parameter(1), fw.Parameter(1)]
 
@@ -88,7 +89,7 @@ pyalps.plot.plot(peak_cs)
 plt.xlabel('$L$')
 plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
 plt.title(r'3D Izingov model, $\gamma/\nu=$ %.4s' % gamma_nu)
-plt.savefig("figure_SC_fit%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_BCC_fit%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -112,7 +113,7 @@ plt.xlabel('$L$')
 plt.ylabel('Susceptibilnost $\chi_c(T_c)$')
 plt.title(r'$\gamma/\nu_{ALPS}=$ %.13s, $\gamma/\nu_{SCIPY}=$ %.13s' % (gamma_nu,params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure_SC_fit%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_BCC_fit%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -148,7 +149,7 @@ pyalps.plot.plot(peak_sh)
 plt.xlabel('$L$')
 plt.ylabel('Specificna toplota $c_v(T_c)$')
 plt.title(r'3D Izingov model, $\alpha/\nu=$ %.4s' % alpha_nu)
-plt.savefig("figure_SC_fit%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_BCC_fit%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -171,7 +172,7 @@ plt.xlabel('$L$')
 plt.ylabel('Specificna toplota $c_v(T_c)$')
 plt.title(r'$\alpha/\nu_{ALPS}=$ %.13s, $\alpha/\nu_{SCIPY}=$ %.13s' % (alpha_nu,params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure_SC_fit%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_BCC_fit%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 ##

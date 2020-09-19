@@ -20,11 +20,12 @@ numeratorfigs=1
 
 #prepare the input parameters
 parms = []
-for l in [2,4,6,8,10,12]: 
-    for t in np.linspace(0.01,6.0,60):
+for l in [8,12,14,16,24]: 
+    for t in np.linspace(0.01,9.0,90):
         parms.append(
             { 
-              'LATTICE'        : "simple cubic lattice", 
+              'LATTICE'        : "bcc",
+              'LATTICE_LIBRARY'        : "bcc.xml", 
               'T'              : t,
               'J'              : 1 ,
               'THERMALIZATION' : 20000,
@@ -56,12 +57,12 @@ binder_u2 = pyalps.collectXY(data,x='T',y='Binder Cumulant U2',foreach=['L'])
 
 #a_nu procena
 
-Tc=4.51 #bestTc
+Tc=6.4 #bestTc
 
-n=60
-llista=[2,4,6,8,10,12]
+n=90
+llista=[8,12,14,16,24]
 
-numerator=1
+
 
 delta=[]
 alista=[]
@@ -79,10 +80,10 @@ for a in np.linspace(1.0,4.0,40):
     sel=np.argsort(lvrednost)
     connected_susc=np.array(binder_u4)
     connected_susc=connected_susc[sel]
-    s=open('binder_u4_redosled.txt','w')
+    s=open('binder_u4_BCC_redosled.txt','w')
     s.write(pyalps.plot.convertToText(binder_u4))
     s.close()
-    file=open('binder_u4_redosled.txt')
+    file=open('binder_u4_BCC_redosled.txt')
     file_data=np.loadtxt(file,usecols=(0,1))
     x=file_data[:,0]
     y=file_data[:,1]
@@ -91,22 +92,25 @@ for a in np.linspace(1.0,4.0,40):
     for j in range(0,len(llista)):
         exec("y%d = y[j*n:j*n+n]" % (llista[j]));
     for k in range(0,len(y8)):
-        listadelta.append(abs(y6[k]-y8[k]))
+        listadelta.append(abs(y8[k]-y12[k]))
     plt.figure()
     pyalps.plot.plot(s)
     plt.xlabel('$L^a(T-T_c)/T_c, a=%.2f$' % a)
     plt.ylabel('Binderov kumulant U4 $g$')
-    plt.title('3D Izingov model, SC')
+    plt.title('3D Izingov model, BCC')
     plt.legend(loc='best')
-    plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+    plt.savefig("figure_2_BCC%d.eps"%(numeratorfigs),dpi=300)
     srednjadelta=sum(listadelta)/len(listadelta)
     delta.append(srednjadelta)
     alista.append(a)
-	numeratorfigs+=1
+    numeratorfigs+=1
 
 
 abest=alista[np.argmin(delta)]
 
+o=open('a_BCC.txt','w')
+o.write(pyalps.plot.convertToText(alista[np.argmin(delta)])
+o.close()
 # OK OK OK OK OK OK OK OK OK 
 #############################################################################33
 
@@ -132,7 +136,7 @@ def derivative(f,a,method='central',h=0.1):
         raise ValueError("Method must be 'central', 'forward' or 'backward'.")
 
 
-file=open('binderdata_rounded_t_redosled_3d_Ising_SC.txt')
+file=open('binderdata_rounded_t_redosled_3d_Ising_BCC.txt')
 
 file_data=np.loadtxt(file,usecols=(0,1))
 
@@ -143,8 +147,8 @@ y=file_data[:,1]
 
 
 
-llista = [2,4,6,8,10,12]
-n=60
+llista = [8,12,14,16,24]
+n=90
 
 
 
@@ -173,7 +177,7 @@ for m in range(0,len(llista)):
 
 
 lista=[]
-tc=4.511
+tc=6.4
 
 for p in range(0,len(llista)):
     exec("rez = derivative(funk%d,tc)" % (llista[p]));
@@ -187,7 +191,7 @@ plt.figure()
 plt.plot(x12,y12,label='$U_{4}$',color='b')
 plt.plot(xizv12,yizv12,label='$dU_{4}/dT$',color='r')
 plt.legend(loc='best')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_2_BCC%d.eps"%(numeratorfigs),dpi=300)
 
 numeratorfigs+=1
 
@@ -202,7 +206,7 @@ plt.xlabel('$L$')
 plt.ylabel(r'$dU_{4}/dT|T_{C}\approx L^{1/\nu}$')
 plt.title(r'$1/\nu=$ %.13s,$\nu=$ %.13s' % (params[1],1/params[1]))
 plt.legend(loc='upper left')
-plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+plt.savefig("figure_2_BCC%d.eps"%(numeratorfigs),dpi=300)
 
 
 numeratorfigs+=1
@@ -232,10 +236,10 @@ for two_minus_eta in np.linspace(1.0,3.0,30):
     sel=np.argsort(lvrednost)
     connected_susc=np.array(connected_susc)
     connected_susc=connected_susc[sel]
-    s=open('connectedsusc_redosled.txt','w')
+    s=open('connectedsusc_BCC_redosled.txt','w')
     s.write(pyalps.plot.convertToText(connected_susc))
     s.close()
-    file=open('connectedsusc_redosled.txt')
+    file=open('connectedsusc_BCC_redosled.txt')
     file_data=np.loadtxt(file,usecols=(0,1))
     x=file_data[:,0]
     y=file_data[:,1]
@@ -244,23 +248,25 @@ for two_minus_eta in np.linspace(1.0,3.0,30):
     for j in range(0,len(llista)):
         exec("y%d = y[j*n:j*n+n]" % (llista[j]));
     for k in range(0,len(y8)):
-        listadelta.append(abs(y6[k]-y8[k]))
+        listadelta.append(abs(y8[k]-y12[k]))
     plt.figure()
     pyalps.plot.plot(connected_susc)
     plt.xlabel('$L^a(T-T_c)/T_c, Tc=%.2f, a=%.2f$'%(Tc,abest))
     plt.ylabel(r'$L^{\gamma/\nu}\chi_c,\gamma/\nu=$ %.4s' % two_minus_eta)
-    plt.title('3D Ising model')
+    plt.title('3D Ising model, BCC')
     plt.legend(loc='best')
-    plt.savefig("figure%d.eps"%(numerator),dpi=300)
+    plt.savefig("figure_2_BCC%d.eps"%(numeratorfigs),dpi=300)
     srednjadelta=sum(listadelta)/len(listadelta)
     delta.append(srednjadelta)
     etalista.append(two_minus_eta)
-    numerator+=1
+    numeratorfigs+=1
 
 
-etalista[np.argmin(delta)]
+print(etalista[np.argmin(delta)])
 
-
+o=open('eta_BCC.txt','w')
+o.write(pyalps.plot.convertToText(etalista[np.argmin(delta)])
+o.close()
 # OK OK OK OK OK OK 
 #############################################################################################
 #
@@ -271,28 +277,6 @@ etalista[np.argmin(delta)]
 #
 
 #make a data collapse of the |magnetization| as a function of (T-Tc)/Tc
-magcol=magnetization_abs
-
-for d in magcol:
-    d.x -= Tc
-    d.x = d.x/Tc
-    l = d.props['L']
-    d.x = d.x * pow(float(l),a)
-
-h=magcol
-
-for beta_over_nu in np.linspace(0.5,0.6,10):
-  magcol=h  
-  for d in magcol:
-      l = d.props['L']
-      d.y = d.y / pow(float(l),-beta_over_nu)
-  plt.figure()
-  pyalps.plot.plot(magnetization_abs)
-  plt.xlabel('$L^a(T-T_c)/T_c, Tc=%.3f, a=%.2f$'%(Tc,a))
-  plt.ylabel(r'Magnetizacija $|m|L^\beta/\nu, \beta/\nu=$ %.4s' % beta_over_nu)
-  plt.title('3D Izingov model')
-  plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
-  numeratorfigs+=1
 
 
 # OK OK OK OK OK OK
@@ -317,10 +301,10 @@ for beta_over_nu in np.linspace(0.3,0.7,40):
     sel=np.argsort(lvrednost)
     magnetization_abs=np.array(magnetization_abs)
     magnetization_abs=magnetization_abs[sel]
-    s=open('magnetization_abs_redosled.txt','w')
+    s=open('magnetization_abs_BCC_redosled.txt','w')
     s.write(pyalps.plot.convertToText(magnetization_abs))
     s.close()
-    file=open('magnetization_abs_redosled.txt')
+    file=open('magnetization_abs_BCC_redosled.txt')
     file_data=np.loadtxt(file,usecols=(0,1))
     x=file_data[:,0]
     y=file_data[:,1]
@@ -329,17 +313,21 @@ for beta_over_nu in np.linspace(0.3,0.7,40):
     for j in range(0,len(llista)):
         exec("y%d = y[j*n:j*n+n]" % (llista[j]));
     for k in range(0,len(y8)):
-        listadelta.append(abs(y6[k]-y8[k]))
+        listadelta.append(abs(y8[k]-y12[k]))
     plt.figure()
     pyalps.plot.plot(magnetization_abs)
     plt.xlabel('$L^a(T-T_c)/T_c, Tc=%.3f, a=%.2f$'%(Tc,abest))
     plt.ylabel(r'Magnetizacija $|m|L^\beta/\nu, \beta/\nu=$ %.4s' % beta_over_nu)
-    plt.title('3D Izingov model')
-    plt.savefig("figure_SC%d.eps"%(numeratorfigs),dpi=300)
+    plt.title('3D Izingov model, BCC')
+    plt.savefig("figure_2_BCC%d.eps"%(numeratorfigs),dpi=300)
     srednjadelta=sum(listadelta)/len(listadelta)
     delta.append(srednjadelta)
     betalista.append(beta_over_nu)
     numeratorfigs+=1
 
 
-betalista[np.argmin(delta)]
+print(etalista[np.argmin(delta)])
+
+o=open('beta_BCC.txt','w')
+o.write(pyalps.plot.convertToText(betalista[np.argmin(delta)])
+o.close()

@@ -192,3 +192,7 @@ for Tc in np.linspace(5.0,7.0,60):
   mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
   plt.savefig('figure_BCC%d.eps'%(numeratorfigs),dpi=300)
   numeratorfigs+=1
+  
+  
+  
+  
