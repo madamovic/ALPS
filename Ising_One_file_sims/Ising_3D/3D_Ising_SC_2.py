@@ -108,7 +108,7 @@ for a in np.linspace(1.0,4.0,40):
 abest=alista[np.argmin(delta)]
 
 o=open('a_SC.txt','w')
-o.write(pyalps.plot.convertToText(alista[np.argmin(delta)])
+o.write(pyalps.plot.convertToText(alista[np.argmin(delta)]))
 o.close()
 # OK OK OK OK OK OK OK OK OK 
 #############################################################################33
@@ -328,6 +328,6 @@ for beta_over_nu in np.linspace(0.3,0.7,40):
 print(betalista[np.argmin(delta)])
 
 o=open('beta_SC.txt','w')
-o.write(pyalps.plot.convertToText(betalista[np.argmin(delta)])
+o.write(pyalps.plot.convertToText(betalista[np.argmin(delta)]))
 o.close()
 

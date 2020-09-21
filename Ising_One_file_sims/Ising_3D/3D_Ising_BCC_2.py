@@ -109,7 +109,7 @@ for a in np.linspace(1.0,4.0,40):
 abest=alista[np.argmin(delta)]
 
 o=open('a_BCC.txt','w')
-o.write(pyalps.plot.convertToText(alista[np.argmin(delta)])
+o.write(pyalps.plot.convertToText(alista[np.argmin(delta)]))
 o.close()
 # OK OK OK OK OK OK OK OK OK 
 #############################################################################33
@@ -265,7 +265,7 @@ for two_minus_eta in np.linspace(1.0,3.0,30):
 print(etalista[np.argmin(delta)])
 
 o=open('eta_BCC.txt','w')
-o.write(pyalps.plot.convertToText(etalista[np.argmin(delta)])
+o.write(pyalps.plot.convertToText(etalista[np.argmin(delta)]))
 o.close()
 # OK OK OK OK OK OK 
 #############################################################################################
@@ -329,5 +329,6 @@ for beta_over_nu in np.linspace(0.3,0.7,40):
 print(etalista[np.argmin(delta)])
 
 o=open('beta_BCC.txt','w')
-o.write(pyalps.plot.convertToText(betalista[np.argmin(delta)])
+o.write(pyalps.plot.convertToText(betalista[np.argmin(delta)]))
 o.close()
+
