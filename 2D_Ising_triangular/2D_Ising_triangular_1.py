@@ -19,7 +19,7 @@ from mpl_toolkits.axes_grid1.inset_locator import mark_inset
 
 
 
-numeratorfigs=1
+numeratorfig=1
 
 #prepare the input parameters
 parms = []
@@ -62,9 +62,9 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Magnetizacija $|m|$')
 plt.title('2D Izingov model na trougaonoj resetki')
 plt.legend(loc='best')
-plt.savefig("figure_triangular%d.eps"%(numeratorfigs),dpi=400)
+plt.savefig("figure_triangular%d.eps"%(numeratorfig),dpi=400)
 
-numeratorfigs+=1
+numeratorfig+=1
 
 plt.figure()
 pyalps.plot.plot(connected_susc)
@@ -72,9 +72,9 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Susceptibilnost $\chi$')
 plt.title('2D Izingov model na trougaonoj resetki')
 plt.legend(loc='best')
-plt.savefig("figure_triangular%d.eps"%(numeratorfigs),dpi=400)
+plt.savefig("figure_triangular%d.eps"%(numeratorfig),dpi=400)
 
-numeratorfigs+=1
+numeratorfig+=1
 
 plt.figure()
 pyalps.plot.plot(spec_heat)
@@ -82,10 +82,10 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Specificna toplota $c_v$')
 plt.title('2D Izingov model na trougaonoj resetki')
 plt.legend(loc='best')
-plt.savefig("figure_triangular%d.eps"%(numeratorfigs),dpi=400)
+plt.savefig("figure_triangular%d.eps"%(numeratorfig),dpi=400)
 
 
-numeratorfigs+=1
+numeratorfig+=1
 
 plt.figure()
 pyalps.plot.plot(binder_u4)
@@ -93,9 +93,9 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U4 $g$')
 plt.title('2D Izingov model na trougaonoj resetki')
 plt.legend(loc='best')
-plt.savefig("figure_triangular%d.eps"%(numeratorfigs),dpi=400)
+plt.savefig("figure_triangular%d.eps"%(numeratorfig),dpi=400)
 
-numeratorfigs+=1
+numeratorfig+=1
 
 plt.figure()
 pyalps.plot.plot(binder_u2)
@@ -103,9 +103,9 @@ plt.xlabel('Temperatura $T$')
 plt.ylabel('Binderov kumulant U2 $g$')
 plt.title('2D Izingov model na trougaonoj resetki')
 plt.legend(loc='best')
-plt.savefig("figure_triangular%d.eps"%(numeratorfigs),dpi=400)
+plt.savefig("figure_triangular%d.eps"%(numeratorfig),dpi=400)
 
-numeratorfigs+=1
+numeratorfig+=1
 
 # OK OK OK OK OK OK 
 ###################################################################
@@ -172,11 +172,11 @@ s.close()
 for Tc in np.linspace(3.0,4.5,150):
   binder_u4 = pyalps.collectXY(data,x='T',y='Binder Cumulant',foreach=['L'])
   for d in binder_u4:
-      d.x -= Tc
-      d.x = d.x/Tc
+      d.x -= round(Tc,2)
+      d.x = d.x/round(Tc,2)
   fig, ax = plt.subplots()  
   pyalps.plot.plot(binder_u4)
-  plt.xlabel('$t=(T-T_c)/T_c, T_c=%.3f$'%(Tc)) 
+  plt.xlabel('$t=(T-T_c)/T_c, T_c=%.2f$'%(round(Tc,2))) 
   plt.ylabel('Binderov kumulant U4 $g$')
   plt.title('2D Izingov model na trougaonoj resetki')
   plt.legend(loc='upper left')
@@ -190,7 +190,7 @@ for Tc in np.linspace(3.0,4.5,150):
   plt.ylabel("")
   plt.grid()
   mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="0.5")
-  plt.savefig('figure_triangular%d.eps'%(numeratorfigs),dpi=300)
-  numeratorfigs+=1
+  plt.savefig('figure_triangular%d.eps'%(numeratorfig),dpi=300)
+  numeratorfig+=1
   
   
